@@ -101,18 +101,21 @@ namespace ZabbixHistoryBrowser
             var databaseNameTextBox = this.DatabaseNameTextBox;
             var userIdTextBox = this.UserIdTextBox;
             var userPasswordTextBox = this.UserPasswordTextBox;
+            var reqestTimeoutTextBox = this.ReqestTimeoutTextBox ;
 
             if ((serverAddressTextBox != null)
                  && (connectionPortTextBox != null)
                  && (databaseNameTextBox != null)
                  && (userIdTextBox != null)
-                 && (userPasswordTextBox != null))
+                 && (userPasswordTextBox != null)
+                 && (reqestTimeoutTextBox !=null ))
             {
                 var serverAddress = serverAddressTextBox.Text;
                 var connectionPort = connectionPortTextBox.Text;
                 var databaseName = databaseNameTextBox.Text;
                 var userId = userIdTextBox.Text;
                 var userPassword = userPasswordTextBox.Text;
+                var reqestTimeoutString = reqestTimeoutTextBox.Text ;
 
 
                 using ( var databaseConnection = ZabbixHistoryBrowserForm.GetDatabaseConnection
@@ -127,8 +130,8 @@ namespace ZabbixHistoryBrowser
 
                     if ( databaseConnection != null )
                     {
-                        var testConnectionResult = databaseConnection.State == System.Data.ConnectionState.Open ;
-                        if ( testConnectionResult )
+                        var isSuccessConnection = databaseConnection.State == System.Data.ConnectionState.Open ;
+                        if ( isSuccessConnection )
                         {
                             isConnectionOpen = true ;
                         }
@@ -146,11 +149,21 @@ namespace ZabbixHistoryBrowser
 
                     if ( databaseCommand != null )
                     {
+
+                        double reqestTimeoutDouble;
+                        var isSuccessParse = double.TryParse(reqestTimeoutString, out reqestTimeoutDouble);
+                        if (isSuccessParse )
+                        {
+                            const int C_TimeoutConverRatio = 60 ;
+                            var reqestTimeout = Convert.ToInt32(reqestTimeoutDouble) * C_TimeoutConverRatio;
+                            databaseCommand.CommandTimeout = reqestTimeout;
+                        }
+
                         databaseCommand.CommandText = @"
 SELECT
-      ( SELECT NAME FROM `hosts` HOS WHERE HOS.hostid = HP.templateid ) AS 'template'
-    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.hostid = HP.hostid ) AS 'host'
-	, HP.hostid AS 'hostid'
+      ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) AS 'Template'
+    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.Hostid ) AS 'Host'
+	, HP.Hostid AS 'Hostid'
 FROM
         hosts_templates HP
 WHERE
@@ -161,11 +174,11 @@ WHERE
             FROM
                 `hosts` HOE
                 JOIN items ITE
-                ON ITE.hostid = HOE.hostid
+                ON ITE.Hostid = HOE.Hostid
                 JOIN history HD
                 ON HD.itemid = ITE.itemid
                 WHERE
-                    HOE.hostid = HP.hostid
+                    HOE.Hostid = HP.Hostid
         )
     OR EXISTS
         (
@@ -174,11 +187,11 @@ WHERE
             FROM
                 `hosts` HOE
                 JOIN items ITE
-                ON ITE.hostid = HOE.hostid
+                ON ITE.Hostid = HOE.Hostid
                 JOIN history_str HSE
                 ON HSE.itemid = ITE.itemid
                 WHERE
-                    HOE.hostid = HP.hostid
+                    HOE.Hostid = HP.Hostid
         )
     OR EXISTS
         (
@@ -187,11 +200,11 @@ WHERE
             FROM
                 `hosts` HOE
                 JOIN items ITE
-                ON ITE.hostid = HOE.hostid
+                ON ITE.Hostid = HOE.Hostid
                 JOIN history_text HT
                 ON HT.itemid = ITE.itemid
                 WHERE
-                    HOE.hostid = HP.hostid
+                    HOE.Hostid = HP.Hostid
         )
     OR EXISTS
         (
@@ -200,18 +213,18 @@ WHERE
             FROM
                 `hosts` HOE
                 JOIN items ITE
-                ON ITE.hostid = HOE.hostid
+                ON ITE.Hostid = HOE.Hostid
                 JOIN history_uint HU
                 ON HU.itemid = ITE.itemid
                 WHERE
-                    HOE.hostid = HP.hostid
+                    HOE.Hostid = HP.Hostid
         )        
 ORDER BY 
       HP.templateid
-    , HP.hostid
+    , HP.Hostid
 ;
 " ;
-
+                        
                         databaseCommand.Prepare ( ) ;
                         dataSetReader = databaseCommand.ExecuteReader ( ) ;
                     }
@@ -233,9 +246,9 @@ ORDER BY
                     {
                         var readerFieldCount = dataSetReader.FieldCount ;
 
-                        const string C_TemplateColumn = "template" ;
-                        const string C_HostColumn = "host" ;
-                        const string C_HostidColumn = "hostid" ;
+                        const string C_TemplateColumn = "Template" ;
+                        const string C_HostColumn = "Host" ;
+                        const string C_HostidColumn = "Hostid" ;
 
                         templateIndex = dataSetReader.GetOrdinal
                             (
@@ -257,12 +270,13 @@ ORDER BY
 
                     }
 
+                    var hostsTemplatesList = new System.Collections.Generic.List <HostsTemplates> (  );
+
                     while ( !isEmpty )
                     {
 
                         isEmpty = !dataSetReader.Read ( ) ;
-
-                        // ReSharper disable UnusedVariable
+                        
                         var template = dataSetReader.GetString
                             (
                                 templateIndex ) ;
@@ -272,12 +286,27 @@ ORDER BY
                         var hostId = dataSetReader.GetInt64
                             (
                                 hostidIndex ) ;
-                        // ReSharper restore UnusedVariable
+
+                        var hostsTemplates = new HostsTemplates
+                            (
+                            template ,
+                            host ,
+                            hostId ) ;
+                        hostsTemplatesList.Add ( hostsTemplates );
                     }
 
                     dataSetReader?.Close();
 
                     databaseConnection?.Close();
+
+                    var hostsDataGridView = this.HostsDataGridView ;
+                    if ( hostsDataGridView != null )
+                    {
+                        hostsDataGridView.DataSource = null ;
+                        hostsDataGridView.Rows.Clear (  );
+                        hostsDataGridView.AutoGenerateColumns = true ;
+                        hostsDataGridView.DataSource = hostsTemplatesList;
+                    }
                 }
 
             }

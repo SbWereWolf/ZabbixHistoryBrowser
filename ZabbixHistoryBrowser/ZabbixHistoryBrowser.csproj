@@ -53,6 +53,7 @@
     <Compile Include="HistoryBrowserForm.Designer.cs">
       <DependentUpon>HistoryBrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HostsTemplates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="HistoryBrowserForm.resx">

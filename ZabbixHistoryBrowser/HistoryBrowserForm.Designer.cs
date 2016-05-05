@@ -53,6 +53,8 @@
             this.ItemsTabPage = new System.Windows.Forms.TabPage();
             this.HistoryTabPage = new System.Windows.Forms.TabPage();
             this.ReportTabPage = new System.Windows.Forms.TabPage();
+            this.ReqestTimeoutGroupBox = new System.Windows.Forms.GroupBox();
+            this.ReqestTimeoutTextBox = new System.Windows.Forms.TextBox();
             this.DesktopTabControl.SuspendLayout();
             this.ConnectionTabPage.SuspendLayout();
             this.ConnectionRequsitesGroupBox.SuspendLayout();
@@ -67,6 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.HostsDataGridView)).BeginInit();
             this.ChooseHostGroupBox.SuspendLayout();
             this.GetHostsListGroupBox.SuspendLayout();
+            this.ReqestTimeoutGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // DesktopTabControl
@@ -96,6 +99,7 @@
             // 
             // ConnectionRequsitesGroupBox
             // 
+            this.ConnectionRequsitesGroupBox.Controls.Add(this.ReqestTimeoutGroupBox);
             this.ConnectionRequsitesGroupBox.Controls.Add(this.TestConnectionGroupBox);
             this.ConnectionRequsitesGroupBox.Controls.Add(this.UserPasswordGroupBox);
             this.ConnectionRequsitesGroupBox.Controls.Add(this.UserIdGroupBox);
@@ -343,6 +347,26 @@
             this.ReportTabPage.Text = "Отчёт";
             this.ReportTabPage.UseVisualStyleBackColor = true;
             // 
+            // ReqestTimeoutGroupBox
+            // 
+            this.ReqestTimeoutGroupBox.Controls.Add(this.ReqestTimeoutTextBox);
+            this.ReqestTimeoutGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ReqestTimeoutGroupBox.Location = new System.Drawing.Point(3, 302);
+            this.ReqestTimeoutGroupBox.Name = "ReqestTimeoutGroupBox";
+            this.ReqestTimeoutGroupBox.Size = new System.Drawing.Size(757, 48);
+            this.ReqestTimeoutGroupBox.TabIndex = 7;
+            this.ReqestTimeoutGroupBox.TabStop = false;
+            this.ReqestTimeoutGroupBox.Text = "Таймаут запроса ( минут )";
+            // 
+            // ReqestTimeoutTextBox
+            // 
+            this.ReqestTimeoutTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReqestTimeoutTextBox.Location = new System.Drawing.Point(3, 18);
+            this.ReqestTimeoutTextBox.Name = "ReqestTimeoutTextBox";
+            this.ReqestTimeoutTextBox.Size = new System.Drawing.Size(751, 22);
+            this.ReqestTimeoutTextBox.TabIndex = 0;
+            this.ReqestTimeoutTextBox.Text = "1";
+            // 
             // ZabbixHistoryBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -370,6 +394,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.HostsDataGridView)).EndInit();
             this.ChooseHostGroupBox.ResumeLayout(false);
             this.GetHostsListGroupBox.ResumeLayout(false);
+            this.ReqestTimeoutGroupBox.ResumeLayout(false);
+            this.ReqestTimeoutGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -401,6 +427,8 @@
         private System.Windows.Forms.Button ChooseHostButton;
         private System.Windows.Forms.GroupBox GetHostsListGroupBox;
         private System.Windows.Forms.Button GetHostsListButton;
+        private System.Windows.Forms.GroupBox ReqestTimeoutGroupBox;
+        private System.Windows.Forms.TextBox ReqestTimeoutTextBox;
     }
 }
 

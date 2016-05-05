@@ -53,6 +53,7 @@
     <Compile Include="HistoryBrowserForm.Designer.cs">
       <DependentUpon>HistoryBrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HostsItems.cs" />
     <Compile Include="HostsTemplates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

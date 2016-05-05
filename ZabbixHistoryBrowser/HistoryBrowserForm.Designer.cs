@@ -31,6 +31,8 @@
             this.DesktopTabControl = new System.Windows.Forms.TabControl();
             this.ConnectionTabPage = new System.Windows.Forms.TabPage();
             this.ConnectionRequsitesGroupBox = new System.Windows.Forms.GroupBox();
+            this.ReqestTimeoutGroupBox = new System.Windows.Forms.GroupBox();
+            this.ReqestTimeoutTextBox = new System.Windows.Forms.TextBox();
             this.TestConnectionGroupBox = new System.Windows.Forms.GroupBox();
             this.TestConnectionButton = new System.Windows.Forms.Button();
             this.UserPasswordGroupBox = new System.Windows.Forms.GroupBox();
@@ -51,13 +53,23 @@
             this.GetHostsListGroupBox = new System.Windows.Forms.GroupBox();
             this.GetHostsListButton = new System.Windows.Forms.Button();
             this.ItemsTabPage = new System.Windows.Forms.TabPage();
+            this.ItemsListGroupBox = new System.Windows.Forms.GroupBox();
+            this.ItemsListDataGridView = new System.Windows.Forms.DataGridView();
+            this.RequestItemsGroupBox = new System.Windows.Forms.GroupBox();
+            this.RequestItemsButton = new System.Windows.Forms.Button();
+            this.ItemsListFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.ItemNameFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.ItemNameFilterTextBox = new System.Windows.Forms.TextBox();
+            this.HostFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.HostFilterTextBox = new System.Windows.Forms.TextBox();
+            this.ChooseItemGroupBox = new System.Windows.Forms.GroupBox();
+            this.ChooseItemButton = new System.Windows.Forms.Button();
             this.HistoryTabPage = new System.Windows.Forms.TabPage();
             this.ReportTabPage = new System.Windows.Forms.TabPage();
-            this.ReqestTimeoutGroupBox = new System.Windows.Forms.GroupBox();
-            this.ReqestTimeoutTextBox = new System.Windows.Forms.TextBox();
             this.DesktopTabControl.SuspendLayout();
             this.ConnectionTabPage.SuspendLayout();
             this.ConnectionRequsitesGroupBox.SuspendLayout();
+            this.ReqestTimeoutGroupBox.SuspendLayout();
             this.TestConnectionGroupBox.SuspendLayout();
             this.UserPasswordGroupBox.SuspendLayout();
             this.UserIdGroupBox.SuspendLayout();
@@ -69,7 +81,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.HostsDataGridView)).BeginInit();
             this.ChooseHostGroupBox.SuspendLayout();
             this.GetHostsListGroupBox.SuspendLayout();
-            this.ReqestTimeoutGroupBox.SuspendLayout();
+            this.ItemsTabPage.SuspendLayout();
+            this.ItemsListGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemsListDataGridView)).BeginInit();
+            this.RequestItemsGroupBox.SuspendLayout();
+            this.ItemsListFilterGroupBox.SuspendLayout();
+            this.ItemNameFilterGroupBox.SuspendLayout();
+            this.HostFilterGroupBox.SuspendLayout();
+            this.ChooseItemGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // DesktopTabControl
@@ -113,6 +132,26 @@
             this.ConnectionRequsitesGroupBox.TabIndex = 0;
             this.ConnectionRequsitesGroupBox.TabStop = false;
             this.ConnectionRequsitesGroupBox.Text = "Реквизиты соединения";
+            // 
+            // ReqestTimeoutGroupBox
+            // 
+            this.ReqestTimeoutGroupBox.Controls.Add(this.ReqestTimeoutTextBox);
+            this.ReqestTimeoutGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ReqestTimeoutGroupBox.Location = new System.Drawing.Point(3, 302);
+            this.ReqestTimeoutGroupBox.Name = "ReqestTimeoutGroupBox";
+            this.ReqestTimeoutGroupBox.Size = new System.Drawing.Size(757, 48);
+            this.ReqestTimeoutGroupBox.TabIndex = 7;
+            this.ReqestTimeoutGroupBox.TabStop = false;
+            this.ReqestTimeoutGroupBox.Text = "Таймаут запроса ( минут )";
+            // 
+            // ReqestTimeoutTextBox
+            // 
+            this.ReqestTimeoutTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReqestTimeoutTextBox.Location = new System.Drawing.Point(3, 18);
+            this.ReqestTimeoutTextBox.Name = "ReqestTimeoutTextBox";
+            this.ReqestTimeoutTextBox.Size = new System.Drawing.Size(751, 22);
+            this.ReqestTimeoutTextBox.TabIndex = 0;
+            this.ReqestTimeoutTextBox.Text = "10";
             // 
             // TestConnectionGroupBox
             // 
@@ -294,6 +333,7 @@
             this.ChooseHostButton.TabIndex = 1;
             this.ChooseHostButton.Text = "Выбрать прибор";
             this.ChooseHostButton.UseVisualStyleBackColor = true;
+            this.ChooseHostButton.Click += new System.EventHandler(this.ChooseHostButton_Click);
             // 
             // GetHostsListGroupBox
             // 
@@ -319,6 +359,10 @@
             // 
             // ItemsTabPage
             // 
+            this.ItemsTabPage.Controls.Add(this.ItemsListGroupBox);
+            this.ItemsTabPage.Controls.Add(this.RequestItemsGroupBox);
+            this.ItemsTabPage.Controls.Add(this.ItemsListFilterGroupBox);
+            this.ItemsTabPage.Controls.Add(this.ChooseItemGroupBox);
             this.ItemsTabPage.Location = new System.Drawing.Point(4, 25);
             this.ItemsTabPage.Name = "ItemsTabPage";
             this.ItemsTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -326,6 +370,125 @@
             this.ItemsTabPage.TabIndex = 2;
             this.ItemsTabPage.Text = "Показатели";
             this.ItemsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // ItemsListGroupBox
+            // 
+            this.ItemsListGroupBox.Controls.Add(this.ItemsListDataGridView);
+            this.ItemsListGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ItemsListGroupBox.Location = new System.Drawing.Point(3, 127);
+            this.ItemsListGroupBox.Name = "ItemsListGroupBox";
+            this.ItemsListGroupBox.Size = new System.Drawing.Size(763, 333);
+            this.ItemsListGroupBox.TabIndex = 2;
+            this.ItemsListGroupBox.TabStop = false;
+            this.ItemsListGroupBox.Text = "Список показателей";
+            // 
+            // ItemsListDataGridView
+            // 
+            this.ItemsListDataGridView.AllowUserToAddRows = false;
+            this.ItemsListDataGridView.AllowUserToDeleteRows = false;
+            this.ItemsListDataGridView.AllowUserToOrderColumns = true;
+            this.ItemsListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ItemsListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ItemsListDataGridView.Location = new System.Drawing.Point(3, 18);
+            this.ItemsListDataGridView.Name = "ItemsListDataGridView";
+            this.ItemsListDataGridView.ReadOnly = true;
+            this.ItemsListDataGridView.RowTemplate.Height = 24;
+            this.ItemsListDataGridView.Size = new System.Drawing.Size(757, 312);
+            this.ItemsListDataGridView.TabIndex = 0;
+            // 
+            // RequestItemsGroupBox
+            // 
+            this.RequestItemsGroupBox.Controls.Add(this.RequestItemsButton);
+            this.RequestItemsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.RequestItemsGroupBox.Location = new System.Drawing.Point(3, 70);
+            this.RequestItemsGroupBox.Name = "RequestItemsGroupBox";
+            this.RequestItemsGroupBox.Size = new System.Drawing.Size(763, 57);
+            this.RequestItemsGroupBox.TabIndex = 4;
+            this.RequestItemsGroupBox.TabStop = false;
+            this.RequestItemsGroupBox.Text = "Выборка показателей";
+            // 
+            // RequestItemsButton
+            // 
+            this.RequestItemsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RequestItemsButton.Location = new System.Drawing.Point(3, 18);
+            this.RequestItemsButton.Name = "RequestItemsButton";
+            this.RequestItemsButton.Size = new System.Drawing.Size(757, 36);
+            this.RequestItemsButton.TabIndex = 0;
+            this.RequestItemsButton.Text = "Выбрать показатели";
+            this.RequestItemsButton.UseVisualStyleBackColor = true;
+            this.RequestItemsButton.Click += new System.EventHandler(this.RequestItemsButton_Click);
+            // 
+            // ItemsListFilterGroupBox
+            // 
+            this.ItemsListFilterGroupBox.Controls.Add(this.ItemNameFilterGroupBox);
+            this.ItemsListFilterGroupBox.Controls.Add(this.HostFilterGroupBox);
+            this.ItemsListFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ItemsListFilterGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.ItemsListFilterGroupBox.Name = "ItemsListFilterGroupBox";
+            this.ItemsListFilterGroupBox.Size = new System.Drawing.Size(763, 67);
+            this.ItemsListFilterGroupBox.TabIndex = 1;
+            this.ItemsListFilterGroupBox.TabStop = false;
+            this.ItemsListFilterGroupBox.Text = "Фильтры списка показателей ( используйте символ `%` вместо символа `*` )";
+            // 
+            // ItemNameFilterGroupBox
+            // 
+            this.ItemNameFilterGroupBox.Controls.Add(this.ItemNameFilterTextBox);
+            this.ItemNameFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ItemNameFilterGroupBox.Location = new System.Drawing.Point(382, 18);
+            this.ItemNameFilterGroupBox.Name = "ItemNameFilterGroupBox";
+            this.ItemNameFilterGroupBox.Size = new System.Drawing.Size(379, 46);
+            this.ItemNameFilterGroupBox.TabIndex = 0;
+            this.ItemNameFilterGroupBox.TabStop = false;
+            this.ItemNameFilterGroupBox.Text = "Показатель";
+            // 
+            // ItemNameFilterTextBox
+            // 
+            this.ItemNameFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ItemNameFilterTextBox.Location = new System.Drawing.Point(3, 18);
+            this.ItemNameFilterTextBox.Name = "ItemNameFilterTextBox";
+            this.ItemNameFilterTextBox.Size = new System.Drawing.Size(373, 22);
+            this.ItemNameFilterTextBox.TabIndex = 1;
+            // 
+            // HostFilterGroupBox
+            // 
+            this.HostFilterGroupBox.Controls.Add(this.HostFilterTextBox);
+            this.HostFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HostFilterGroupBox.Location = new System.Drawing.Point(3, 18);
+            this.HostFilterGroupBox.Name = "HostFilterGroupBox";
+            this.HostFilterGroupBox.Size = new System.Drawing.Size(379, 46);
+            this.HostFilterGroupBox.TabIndex = 1;
+            this.HostFilterGroupBox.TabStop = false;
+            this.HostFilterGroupBox.Text = "Прибор";
+            // 
+            // HostFilterTextBox
+            // 
+            this.HostFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HostFilterTextBox.Location = new System.Drawing.Point(3, 18);
+            this.HostFilterTextBox.Name = "HostFilterTextBox";
+            this.HostFilterTextBox.Size = new System.Drawing.Size(373, 22);
+            this.HostFilterTextBox.TabIndex = 1;
+            // 
+            // ChooseItemGroupBox
+            // 
+            this.ChooseItemGroupBox.Controls.Add(this.ChooseItemButton);
+            this.ChooseItemGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ChooseItemGroupBox.Location = new System.Drawing.Point(3, 460);
+            this.ChooseItemGroupBox.Name = "ChooseItemGroupBox";
+            this.ChooseItemGroupBox.Size = new System.Drawing.Size(763, 56);
+            this.ChooseItemGroupBox.TabIndex = 3;
+            this.ChooseItemGroupBox.TabStop = false;
+            this.ChooseItemGroupBox.Text = "Выбор показателя";
+            // 
+            // ChooseItemButton
+            // 
+            this.ChooseItemButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChooseItemButton.Location = new System.Drawing.Point(3, 18);
+            this.ChooseItemButton.Name = "ChooseItemButton";
+            this.ChooseItemButton.Size = new System.Drawing.Size(757, 35);
+            this.ChooseItemButton.TabIndex = 1;
+            this.ChooseItemButton.Text = "Выбрать показатель";
+            this.ChooseItemButton.UseVisualStyleBackColor = true;
+            this.ChooseItemButton.Click += new System.EventHandler(this.ChooseItemButton_Click);
             // 
             // HistoryTabPage
             // 
@@ -347,26 +510,6 @@
             this.ReportTabPage.Text = "Отчёт";
             this.ReportTabPage.UseVisualStyleBackColor = true;
             // 
-            // ReqestTimeoutGroupBox
-            // 
-            this.ReqestTimeoutGroupBox.Controls.Add(this.ReqestTimeoutTextBox);
-            this.ReqestTimeoutGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ReqestTimeoutGroupBox.Location = new System.Drawing.Point(3, 302);
-            this.ReqestTimeoutGroupBox.Name = "ReqestTimeoutGroupBox";
-            this.ReqestTimeoutGroupBox.Size = new System.Drawing.Size(757, 48);
-            this.ReqestTimeoutGroupBox.TabIndex = 7;
-            this.ReqestTimeoutGroupBox.TabStop = false;
-            this.ReqestTimeoutGroupBox.Text = "Таймаут запроса ( минут )";
-            // 
-            // ReqestTimeoutTextBox
-            // 
-            this.ReqestTimeoutTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReqestTimeoutTextBox.Location = new System.Drawing.Point(3, 18);
-            this.ReqestTimeoutTextBox.Name = "ReqestTimeoutTextBox";
-            this.ReqestTimeoutTextBox.Size = new System.Drawing.Size(751, 22);
-            this.ReqestTimeoutTextBox.TabIndex = 0;
-            this.ReqestTimeoutTextBox.Text = "1";
-            // 
             // ZabbixHistoryBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -378,6 +521,8 @@
             this.DesktopTabControl.ResumeLayout(false);
             this.ConnectionTabPage.ResumeLayout(false);
             this.ConnectionRequsitesGroupBox.ResumeLayout(false);
+            this.ReqestTimeoutGroupBox.ResumeLayout(false);
+            this.ReqestTimeoutGroupBox.PerformLayout();
             this.TestConnectionGroupBox.ResumeLayout(false);
             this.UserPasswordGroupBox.ResumeLayout(false);
             this.UserPasswordGroupBox.PerformLayout();
@@ -394,8 +539,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.HostsDataGridView)).EndInit();
             this.ChooseHostGroupBox.ResumeLayout(false);
             this.GetHostsListGroupBox.ResumeLayout(false);
-            this.ReqestTimeoutGroupBox.ResumeLayout(false);
-            this.ReqestTimeoutGroupBox.PerformLayout();
+            this.ItemsTabPage.ResumeLayout(false);
+            this.ItemsListGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ItemsListDataGridView)).EndInit();
+            this.RequestItemsGroupBox.ResumeLayout(false);
+            this.ItemsListFilterGroupBox.ResumeLayout(false);
+            this.ItemNameFilterGroupBox.ResumeLayout(false);
+            this.ItemNameFilterGroupBox.PerformLayout();
+            this.HostFilterGroupBox.ResumeLayout(false);
+            this.HostFilterGroupBox.PerformLayout();
+            this.ChooseItemGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -429,6 +582,17 @@
         private System.Windows.Forms.Button GetHostsListButton;
         private System.Windows.Forms.GroupBox ReqestTimeoutGroupBox;
         private System.Windows.Forms.TextBox ReqestTimeoutTextBox;
+        private System.Windows.Forms.GroupBox ItemsListGroupBox;
+        private System.Windows.Forms.DataGridView ItemsListDataGridView;
+        private System.Windows.Forms.GroupBox ItemsListFilterGroupBox;
+        private System.Windows.Forms.GroupBox RequestItemsGroupBox;
+        private System.Windows.Forms.Button RequestItemsButton;
+        private System.Windows.Forms.GroupBox ChooseItemGroupBox;
+        private System.Windows.Forms.Button ChooseItemButton;
+        private System.Windows.Forms.GroupBox ItemNameFilterGroupBox;
+        private System.Windows.Forms.TextBox ItemNameFilterTextBox;
+        private System.Windows.Forms.GroupBox HostFilterGroupBox;
+        private System.Windows.Forms.TextBox HostFilterTextBox;
     }
 }
 

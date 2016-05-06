@@ -177,69 +177,76 @@ namespace ZabbixHistoryBrowser
                             databaseCommand.CommandTimeout = reqestTimeout;
                         }
 
+                        //                        databaseCommand.CommandText = $@"
+                        //SELECT
+                        //      ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' 
+                        //    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.Hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+                        //FROM
+                        //        hosts_templates HP
+                        //WHERE
+                        //       EXISTS
+                        //        (
+                        //            SELECT
+                        //                NULL
+                        //            FROM
+                        //                `hosts` HOE
+                        //                JOIN items ITE
+                        //                ON ITE.Hostid = HOE.Hostid
+                        //                JOIN history HD
+                        //                ON HD.itemid = ITE.itemid
+                        //                WHERE
+                        //                    HOE.Hostid = HP.Hostid
+                        //        )
+                        //    OR EXISTS
+                        //        (
+                        //            SELECT
+                        //                NULL
+                        //            FROM
+                        //                `hosts` HOE
+                        //                JOIN items ITE
+                        //                ON ITE.Hostid = HOE.Hostid
+                        //                JOIN history_str HSE
+                        //                ON HSE.itemid = ITE.itemid
+                        //                WHERE
+                        //                    HOE.Hostid = HP.Hostid
+                        //        )
+                        //    OR EXISTS
+                        //        (
+                        //            SELECT
+                        //                NULL
+                        //            FROM
+                        //                `hosts` HOE
+                        //                JOIN items ITE
+                        //                ON ITE.Hostid = HOE.Hostid
+                        //                JOIN history_text HT
+                        //                ON HT.itemid = ITE.itemid
+                        //                WHERE
+                        //                    HOE.Hostid = HP.Hostid
+                        //        )
+                        //    OR EXISTS
+                        //        (
+                        //            SELECT
+                        //                NULL
+                        //            FROM
+                        //                `hosts` HOE
+                        //                JOIN items ITE
+                        //                ON ITE.Hostid = HOE.Hostid
+                        //                JOIN history_uint HU
+                        //                ON HU.itemid = ITE.itemid
+                        //                WHERE
+                        //                    HOE.Hostid = HP.Hostid
+                        //        )        
+                        //ORDER BY 
+                        //      HP.templateid
+                        //    , HP.Hostid
+                        //LIMIT 1
+                        //;
+                        //";
                         databaseCommand.CommandText = $@"
 SELECT
-      ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' -- 'Template'
-    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.Hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}' -- 'Host'
-	-- , HP.Hostid AS 'Hostid'
-FROM
-        hosts_templates HP
-WHERE
-       EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                `hosts` HOE
-                JOIN items ITE
-                ON ITE.Hostid = HOE.Hostid
-                JOIN history HD
-                ON HD.itemid = ITE.itemid
-                WHERE
-                    HOE.Hostid = HP.Hostid
-        )
-    OR EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                `hosts` HOE
-                JOIN items ITE
-                ON ITE.Hostid = HOE.Hostid
-                JOIN history_str HSE
-                ON HSE.itemid = ITE.itemid
-                WHERE
-                    HOE.Hostid = HP.Hostid
-        )
-    OR EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                `hosts` HOE
-                JOIN items ITE
-                ON ITE.Hostid = HOE.Hostid
-                JOIN history_text HT
-                ON HT.itemid = ITE.itemid
-                WHERE
-                    HOE.Hostid = HP.Hostid
-        )
-    OR EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                `hosts` HOE
-                JOIN items ITE
-                ON ITE.Hostid = HOE.Hostid
-                JOIN history_uint HU
-                ON HU.itemid = ITE.itemid
-                WHERE
-                    HOE.Hostid = HP.Hostid
-        )        
-ORDER BY 
-      HP.templateid
-    , HP.Hostid
+      'Barco' AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' 
+    , 'Ekb_Salut3_32B' AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+
 LIMIT 1
 ;
 ";
@@ -288,19 +295,23 @@ LIMIT 1
 
                         isEmpty = !dataSetReader.Read ( ) ;
                         
-                        var template = dataSetReader.GetString
-                            (
-                                templateIndex ) ;
-                        var host = dataSetReader.GetString
-                            (
-                                hostIndex ) ;
+                        if ( !isEmpty )
+                        {
+                            var template = dataSetReader.GetString
+                                                        (
+                                                            templateIndex);
+                            var host = dataSetReader.GetString
+                                (
+                                    hostIndex);
 
-                        var hostsTemplates = new HostsTemplates
-                            (
-                            template ,
-                            host 
-                             ) ;
-                        hostsTemplatesList.Add ( hostsTemplates );
+                            var hostsTemplates = new HostsTemplates
+                                (
+                                template,
+                                host
+                                 );
+                            hostsTemplatesList.Add(hostsTemplates);
+                        }
+                        
                     }
 
                     dataSetReader?.Close();
@@ -511,64 +522,73 @@ LIMIT 1
                     const string C_HostMask = "@HostMask";
                     const string C_ItemKeyMask = "@ItemKeyMask";
 
+                    //                    databaseCommand.CommandText = $@"
+                    //SELECT
+                    //    ( SELECT host FROM `hosts` HOS WHERE HOS.hostid = IT.hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+                    //    , IT.name AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
+                    //    , IT.key_ AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
+                    //    , IT.units AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
+                    //    , IT.description AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
+
+                    //FROM
+                    //    items IT
+                    //WHERE
+                    //        (
+                    //               {C_HostMask} IS NULL
+                    //            OR  EXISTS( SELECT NULL FROM `hosts` HOW WHERE HOW.hostid = IT.hostid AND HOW.host LIKE {C_HostMask} )
+                    //        )
+                    //    AND (
+                    //               {C_ItemKeyMask} IS NULL
+                    //            OR  IT.key_ LIKE {C_ItemKeyMask}
+                    //        )
+                    //    AND
+                    //        (
+                    //            EXISTS
+                    //            (
+                    //                SELECT
+                    //                    NULL
+                    //                FROM
+                    //                    history HDE
+                    //                WHERE
+                    //                    HDE.itemid = IT.itemid
+                    //            )
+                    //            OR EXISTS
+                    //            (
+                    //                SELECT
+                    //                    NULL
+                    //                FROM
+                    //                    history_str HSE
+                    //                WHERE
+                    //                    HSE.itemid = IT.itemid
+                    //            )
+                    //            OR EXISTS
+                    //            (
+                    //                SELECT
+                    //                    NULL
+                    //                FROM
+                    //                    history_text HTE
+                    //                WHERE
+                    //                    HTE.itemid = IT.itemid
+                    //            )
+                    //            OR EXISTS
+                    //            (
+                    //                SELECT
+                    //                    NULL
+                    //                FROM
+                    //                    history_uint HUE
+                    //                WHERE
+                    //                    HUE.itemid = IT.itemid
+                    //            )         
+                    //        )
+                    //;
+                    //";
                     databaseCommand.CommandText = $@"
 SELECT
-    ( SELECT host FROM `hosts` HOS WHERE HOS.hostid = IT.hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
-    , IT.name AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
-    , IT.key_ AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
-    , IT.units AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
-    , IT.description AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
-
-FROM
-    items IT
-WHERE
-        (
-               {C_HostMask} IS NULL
-            OR  EXISTS( SELECT NULL FROM `hosts` HOW WHERE HOW.hostid = IT.hostid AND HOW.host LIKE {C_HostMask} )
-        )
-    AND (
-               {C_ItemKeyMask} IS NULL
-            OR  IT.key_ LIKE {C_ItemKeyMask}
-        )
-    AND
-        (
-            EXISTS
-            (
-                SELECT
-                    NULL
-                FROM
-                    history HDE
-                WHERE
-                    HDE.itemid = IT.itemid
-            )
-            OR EXISTS
-            (
-                SELECT
-                    NULL
-                FROM
-                    history_str HSE
-                WHERE
-                    HSE.itemid = IT.itemid
-            )
-            OR EXISTS
-            (
-                SELECT
-                    NULL
-                FROM
-                    history_text HTE
-                WHERE
-                    HTE.itemid = IT.itemid
-            )
-            OR EXISTS
-            (
-                SELECT
-                    NULL
-                FROM
-                    history_uint HUE
-                WHERE
-                    HUE.itemid = IT.itemid
-            )         
-        )
+    'Ekb_Salut3_32B' AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+    , 'BM:temperature.1' AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
+    , 'BM_temperature.1' AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
+    , ' ' AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
+    , ' ' AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
 ;
 ";
 
@@ -666,31 +686,35 @@ WHERE
 
                     isEmpty = !dataSetReader.Read();
 
-                    var host = dataSetReader.GetString
-                        (
-                            hostIndex);
-                    var name = dataSetReader.GetString
-                        (
-                            nameIndex);
-                    var key = dataSetReader.GetString
-                                                (
-                                                    keyIndex);
-                    var units = dataSetReader.GetString
-                                                (
-                                                    unitsIndex);
-                    var description = dataSetReader.GetString
-                                                (
-                                                    descriptionIndex);
+                    if ( !isEmpty )
+                    {
+                        var host = dataSetReader.GetString
+                            (
+                                hostIndex);
+                        var name = dataSetReader.GetString
+                            (
+                                nameIndex);
+                        var key = dataSetReader.GetString
+                                                    (
+                                                        keyIndex);
+                        var units = dataSetReader.GetString
+                                                    (
+                                                        unitsIndex);
+                        var description = dataSetReader.GetString
+                                                    (
+                                                        descriptionIndex);
 
-                    var hostsItem = new HostsItems
-                        (
-                        host
-                        , name
-                        , key
-                        , units
-                        , description
-                        );
-                    hostsItemsList.Add(hostsItem);
+                        var hostsItem = new HostsItems
+                            (
+                            host
+                            , name
+                            , key
+                            , units
+                            , description
+                            );
+                        hostsItemsList.Add(hostsItem);
+                    }
+
                 }
 
                 dataSetReader?.Close();
@@ -812,105 +836,113 @@ WHERE
                     const string C_HistoryFirstDay = "@HistoryFirstDay" ;
                     const string C_HistoryLastDay = "@HistoryLastDay" ;
 
+                    //                    databaseCommand.CommandText =
+                    //                        $@"
+                    //SELECT
+                    //      FROM_UNIXTIME(HD.clock) AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
+                    //    , HD.value AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
+                    //FROM
+                    //    history HD
+                    //WHERE
+                    //        EXISTS
+                    //        (
+                    //            SELECT
+                    //                NULL
+                    //            FROM
+                    //                items ITS
+                    //            WHERE
+                    //                HD.itemid = ITS.itemid
+                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
+                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
+                    //        )
+                    //    AND (
+                    //            {C_HistoryFirstDay} IS NULL
+                    //            OR {C_HistoryLastDay} IS NULL
+                    //            OR HD.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                    //        )
+                    //UNION
+                    //SELECT
+                    //      FROM_UNIXTIME(HS.clock)
+                    //    , HS.value
+                    //FROM
+                    //    history_str HS
+                    //WHERE
+                    //        EXISTS
+                    //        (
+                    //            SELECT
+                    //                NULL
+                    //            FROM
+                    //                items ITS
+                    //            WHERE
+                    //                HS.itemid = ITS.itemid
+                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
+                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
+                    //        )
+                    //    AND 
+                    //        (
+                    //            {C_HistoryFirstDay} IS NULL
+                    //            OR {C_HistoryLastDay} IS NULL
+                    //            OR HS.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                    //        )
+                    //UNION
+                    //SELECT
+                    //      FROM_UNIXTIME(HT.clock) AS DATETIME
+                    //    , HT.value
+                    //FROM
+                    //    history_text HT
+                    //WHERE
+                    //        EXISTS
+                    //        (
+                    //            SELECT
+                    //                NULL
+                    //            FROM
+                    //                items ITS
+                    //            WHERE
+                    //                HT.itemid = ITS.itemid
+                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
+                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
+                    //        )
+                    //    AND 
+                    //        (
+                    //            {C_HistoryFirstDay} IS NULL
+                    //            OR {C_HistoryLastDay} IS NULL
+                    //            OR HT.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                    //        )
+                    //UNION
+                    //SELECT
+                    //      FROM_UNIXTIME(HU.clock) AS DATETIME
+                    //    , HU.value
+                    //FROM
+                    //    history_uint HU
+                    //WHERE
+                    //        EXISTS
+                    //        (
+                    //            SELECT
+                    //                NULL
+                    //            FROM
+                    //                items ITS
+                    //            WHERE
+                    //                HU.itemid = ITS.itemid
+                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
+                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
+                    //        )        
+                    //    AND 
+                    //        (
+                    //            {C_HistoryFirstDay} IS NULL
+                    //            OR {C_HistoryLastDay} IS NULL
+                    //            OR HU.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                    //        )
+                    //LIMIT 1
+                    //;
+                    //";
                     databaseCommand.CommandText =
                         $@"
 SELECT
-      FROM_UNIXTIME(HD.clock) AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
-    , HD.value AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
-FROM
-    history HD
-WHERE
-        EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                items ITS
-            WHERE
-                HD.itemid = ITS.itemid
-                AND ITS.key_ LIKE {C_ItemKeyMask}
-                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-        )
-    AND (
-            {C_HistoryFirstDay} IS NULL
-            OR {C_HistoryLastDay} IS NULL
-            OR HD.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-        )
-UNION
-SELECT
-      FROM_UNIXTIME(HS.clock)
-    , HS.value
-FROM
-    history_str HS
-WHERE
-        EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                items ITS
-            WHERE
-                HS.itemid = ITS.itemid
-                AND ITS.key_ LIKE {C_ItemKeyMask}
-                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-        )
-    AND 
-        (
-            {C_HistoryFirstDay} IS NULL
-            OR {C_HistoryLastDay} IS NULL
-            OR HS.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-        )
-UNION
-SELECT
-      FROM_UNIXTIME(HT.clock) AS DATETIME
-    , HT.value
-FROM
-    history_text HT
-WHERE
-        EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                items ITS
-            WHERE
-                HT.itemid = ITS.itemid
-                AND ITS.key_ LIKE {C_ItemKeyMask}
-                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-        )
-    AND 
-        (
-            {C_HistoryFirstDay} IS NULL
-            OR {C_HistoryLastDay} IS NULL
-            OR HT.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-        )
-UNION
-SELECT
-      FROM_UNIXTIME(HU.clock) AS DATETIME
-    , HU.value
-FROM
-    history_uint HU
-WHERE
-        EXISTS
-        (
-            SELECT
-                NULL
-            FROM
-                items ITS
-            WHERE
-                HU.itemid = ITS.itemid
-                AND ITS.key_ LIKE {C_ItemKeyMask}
-                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-        )        
-    AND 
-        (
-            {C_HistoryFirstDay} IS NULL
-            OR {C_HistoryLastDay} IS NULL
-            OR HU.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-        )
-LIMIT 1
+      '2016-04-01 13:01:42' AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
+    , '32' AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
+
 ;
-" ;
+";
 
                     var hostParameter = string.Empty ;
                     var itemParameter = string.Empty ;
@@ -1010,21 +1042,25 @@ LIMIT 1
 
                     isEmpty = !dataSetReader.Read ( ) ;
 
-                    var date = dataSetReader.GetDateTime 
-                        (
-                            dateIndex) ;
-                    var value = dataSetReader.GetString
-                        (
-                            valueIndex) ;
+                    if ( !isEmpty )
+                    {
+                        var date = dataSetReader.GetDateTime
+                            (
+                                dateIndex);
+                        var value = dataSetReader.GetString
+                            (
+                                valueIndex);
 
-                    var hostsItem = new ItemsHistory
-                        (
-                        date
-                        , value
-                        ) ;
-                    itemsHistoriesList.Add
-                        (
-                            hostsItem ) ;
+                        var hostsItem = new ItemsHistory
+                            (
+                            date
+                            , value
+                            );
+                        itemsHistoriesList.Add
+                            (
+                                hostsItem);
+                    }
+
                 }
 
                 dataSetReader?.Close ( ) ;

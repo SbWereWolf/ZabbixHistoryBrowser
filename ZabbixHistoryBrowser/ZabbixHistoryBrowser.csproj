@@ -53,6 +53,7 @@
     <Compile Include="HistoryBrowserForm.Designer.cs">
       <DependentUpon>HistoryBrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ItemsHistory.cs" />
     <Compile Include="HostsItems.cs" />
     <Compile Include="HostsTemplates.cs" />
     <Compile Include="Program.cs" />

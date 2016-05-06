@@ -58,13 +58,28 @@
             this.RequestItemsGroupBox = new System.Windows.Forms.GroupBox();
             this.RequestItemsButton = new System.Windows.Forms.Button();
             this.ItemsListFilterGroupBox = new System.Windows.Forms.GroupBox();
-            this.ItemNameFilterGroupBox = new System.Windows.Forms.GroupBox();
-            this.ItemNameFilterTextBox = new System.Windows.Forms.TextBox();
+            this.ItemKeyFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.ItemKeyFilterTextBox = new System.Windows.Forms.TextBox();
             this.HostFilterGroupBox = new System.Windows.Forms.GroupBox();
             this.HostFilterTextBox = new System.Windows.Forms.TextBox();
             this.ChooseItemGroupBox = new System.Windows.Forms.GroupBox();
             this.ChooseItemButton = new System.Windows.Forms.Button();
             this.HistoryTabPage = new System.Windows.Forms.TabPage();
+            this.HistoryListGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryListDataGridView = new System.Windows.Forms.DataGridView();
+            this.AttachHistoryValueGroupBox = new System.Windows.Forms.GroupBox();
+            this.AttachHistoryValueButton = new System.Windows.Forms.Button();
+            this.RequestHistoryGroupBox = new System.Windows.Forms.GroupBox();
+            this.RequestHistoryButton = new System.Windows.Forms.Button();
+            this.HistoryFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryLastDayGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryLastDayDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.HistoryFirstDayGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryFirstDayDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.HistoryItemFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryItemKeyFilterTextBox = new System.Windows.Forms.TextBox();
+            this.HistoryHostFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.HistoryHostFilterTextBox = new System.Windows.Forms.TextBox();
             this.ReportTabPage = new System.Windows.Forms.TabPage();
             this.DesktopTabControl.SuspendLayout();
             this.ConnectionTabPage.SuspendLayout();
@@ -86,9 +101,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemsListDataGridView)).BeginInit();
             this.RequestItemsGroupBox.SuspendLayout();
             this.ItemsListFilterGroupBox.SuspendLayout();
-            this.ItemNameFilterGroupBox.SuspendLayout();
+            this.ItemKeyFilterGroupBox.SuspendLayout();
             this.HostFilterGroupBox.SuspendLayout();
             this.ChooseItemGroupBox.SuspendLayout();
+            this.HistoryTabPage.SuspendLayout();
+            this.HistoryListGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HistoryListDataGridView)).BeginInit();
+            this.AttachHistoryValueGroupBox.SuspendLayout();
+            this.RequestHistoryGroupBox.SuspendLayout();
+            this.HistoryFilterGroupBox.SuspendLayout();
+            this.HistoryLastDayGroupBox.SuspendLayout();
+            this.HistoryFirstDayGroupBox.SuspendLayout();
+            this.HistoryItemFilterGroupBox.SuspendLayout();
+            this.HistoryHostFilterGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // DesktopTabControl
@@ -405,7 +430,7 @@
             this.RequestItemsGroupBox.Size = new System.Drawing.Size(763, 57);
             this.RequestItemsGroupBox.TabIndex = 4;
             this.RequestItemsGroupBox.TabStop = false;
-            this.RequestItemsGroupBox.Text = "Выборка показателей";
+            this.RequestItemsGroupBox.Text = "Загрузка показателей";
             // 
             // RequestItemsButton
             // 
@@ -414,13 +439,13 @@
             this.RequestItemsButton.Name = "RequestItemsButton";
             this.RequestItemsButton.Size = new System.Drawing.Size(757, 36);
             this.RequestItemsButton.TabIndex = 0;
-            this.RequestItemsButton.Text = "Выбрать показатели";
+            this.RequestItemsButton.Text = "Загрузить показатели";
             this.RequestItemsButton.UseVisualStyleBackColor = true;
             this.RequestItemsButton.Click += new System.EventHandler(this.RequestItemsButton_Click);
             // 
             // ItemsListFilterGroupBox
             // 
-            this.ItemsListFilterGroupBox.Controls.Add(this.ItemNameFilterGroupBox);
+            this.ItemsListFilterGroupBox.Controls.Add(this.ItemKeyFilterGroupBox);
             this.ItemsListFilterGroupBox.Controls.Add(this.HostFilterGroupBox);
             this.ItemsListFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.ItemsListFilterGroupBox.Location = new System.Drawing.Point(3, 3);
@@ -430,24 +455,24 @@
             this.ItemsListFilterGroupBox.TabStop = false;
             this.ItemsListFilterGroupBox.Text = "Фильтры списка показателей ( используйте символ `%` вместо символа `*` )";
             // 
-            // ItemNameFilterGroupBox
+            // ItemKeyFilterGroupBox
             // 
-            this.ItemNameFilterGroupBox.Controls.Add(this.ItemNameFilterTextBox);
-            this.ItemNameFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ItemNameFilterGroupBox.Location = new System.Drawing.Point(382, 18);
-            this.ItemNameFilterGroupBox.Name = "ItemNameFilterGroupBox";
-            this.ItemNameFilterGroupBox.Size = new System.Drawing.Size(379, 46);
-            this.ItemNameFilterGroupBox.TabIndex = 0;
-            this.ItemNameFilterGroupBox.TabStop = false;
-            this.ItemNameFilterGroupBox.Text = "Показатель";
+            this.ItemKeyFilterGroupBox.Controls.Add(this.ItemKeyFilterTextBox);
+            this.ItemKeyFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ItemKeyFilterGroupBox.Location = new System.Drawing.Point(382, 18);
+            this.ItemKeyFilterGroupBox.Name = "ItemKeyFilterGroupBox";
+            this.ItemKeyFilterGroupBox.Size = new System.Drawing.Size(379, 46);
+            this.ItemKeyFilterGroupBox.TabIndex = 0;
+            this.ItemKeyFilterGroupBox.TabStop = false;
+            this.ItemKeyFilterGroupBox.Text = "Показатель";
             // 
-            // ItemNameFilterTextBox
+            // ItemKeyFilterTextBox
             // 
-            this.ItemNameFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ItemNameFilterTextBox.Location = new System.Drawing.Point(3, 18);
-            this.ItemNameFilterTextBox.Name = "ItemNameFilterTextBox";
-            this.ItemNameFilterTextBox.Size = new System.Drawing.Size(373, 22);
-            this.ItemNameFilterTextBox.TabIndex = 1;
+            this.ItemKeyFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ItemKeyFilterTextBox.Location = new System.Drawing.Point(3, 18);
+            this.ItemKeyFilterTextBox.Name = "ItemKeyFilterTextBox";
+            this.ItemKeyFilterTextBox.Size = new System.Drawing.Size(373, 22);
+            this.ItemKeyFilterTextBox.TabIndex = 1;
             // 
             // HostFilterGroupBox
             // 
@@ -492,6 +517,10 @@
             // 
             // HistoryTabPage
             // 
+            this.HistoryTabPage.Controls.Add(this.HistoryListGroupBox);
+            this.HistoryTabPage.Controls.Add(this.AttachHistoryValueGroupBox);
+            this.HistoryTabPage.Controls.Add(this.RequestHistoryGroupBox);
+            this.HistoryTabPage.Controls.Add(this.HistoryFilterGroupBox);
             this.HistoryTabPage.Location = new System.Drawing.Point(4, 25);
             this.HistoryTabPage.Name = "HistoryTabPage";
             this.HistoryTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -499,6 +528,172 @@
             this.HistoryTabPage.TabIndex = 3;
             this.HistoryTabPage.Text = "Значения";
             this.HistoryTabPage.UseVisualStyleBackColor = true;
+            // 
+            // HistoryListGroupBox
+            // 
+            this.HistoryListGroupBox.Controls.Add(this.HistoryListDataGridView);
+            this.HistoryListGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryListGroupBox.Location = new System.Drawing.Point(3, 127);
+            this.HistoryListGroupBox.Name = "HistoryListGroupBox";
+            this.HistoryListGroupBox.Size = new System.Drawing.Size(763, 333);
+            this.HistoryListGroupBox.TabIndex = 7;
+            this.HistoryListGroupBox.TabStop = false;
+            this.HistoryListGroupBox.Text = "Список значений";
+            // 
+            // HistoryListDataGridView
+            // 
+            this.HistoryListDataGridView.AllowUserToAddRows = false;
+            this.HistoryListDataGridView.AllowUserToDeleteRows = false;
+            this.HistoryListDataGridView.AllowUserToOrderColumns = true;
+            this.HistoryListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HistoryListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryListDataGridView.Location = new System.Drawing.Point(3, 18);
+            this.HistoryListDataGridView.Name = "HistoryListDataGridView";
+            this.HistoryListDataGridView.ReadOnly = true;
+            this.HistoryListDataGridView.RowTemplate.Height = 24;
+            this.HistoryListDataGridView.Size = new System.Drawing.Size(757, 312);
+            this.HistoryListDataGridView.TabIndex = 0;
+            // 
+            // AttachHistoryValueGroupBox
+            // 
+            this.AttachHistoryValueGroupBox.Controls.Add(this.AttachHistoryValueButton);
+            this.AttachHistoryValueGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.AttachHistoryValueGroupBox.Location = new System.Drawing.Point(3, 460);
+            this.AttachHistoryValueGroupBox.Name = "AttachHistoryValueGroupBox";
+            this.AttachHistoryValueGroupBox.Size = new System.Drawing.Size(763, 56);
+            this.AttachHistoryValueGroupBox.TabIndex = 6;
+            this.AttachHistoryValueGroupBox.TabStop = false;
+            this.AttachHistoryValueGroupBox.Text = "Выбор значения для отчёта";
+            // 
+            // AttachHistoryValueButton
+            // 
+            this.AttachHistoryValueButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AttachHistoryValueButton.Location = new System.Drawing.Point(3, 18);
+            this.AttachHistoryValueButton.Name = "AttachHistoryValueButton";
+            this.AttachHistoryValueButton.Size = new System.Drawing.Size(757, 35);
+            this.AttachHistoryValueButton.TabIndex = 1;
+            this.AttachHistoryValueButton.Text = "Добавить значение в отчёт";
+            this.AttachHistoryValueButton.UseVisualStyleBackColor = true;
+            // 
+            // RequestHistoryGroupBox
+            // 
+            this.RequestHistoryGroupBox.Controls.Add(this.RequestHistoryButton);
+            this.RequestHistoryGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.RequestHistoryGroupBox.Location = new System.Drawing.Point(3, 70);
+            this.RequestHistoryGroupBox.Name = "RequestHistoryGroupBox";
+            this.RequestHistoryGroupBox.Size = new System.Drawing.Size(763, 57);
+            this.RequestHistoryGroupBox.TabIndex = 5;
+            this.RequestHistoryGroupBox.TabStop = false;
+            this.RequestHistoryGroupBox.Text = "Загрузка значений";
+            // 
+            // RequestHistoryButton
+            // 
+            this.RequestHistoryButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RequestHistoryButton.Location = new System.Drawing.Point(3, 18);
+            this.RequestHistoryButton.Name = "RequestHistoryButton";
+            this.RequestHistoryButton.Size = new System.Drawing.Size(757, 36);
+            this.RequestHistoryButton.TabIndex = 0;
+            this.RequestHistoryButton.Text = "Загрузить значения";
+            this.RequestHistoryButton.UseVisualStyleBackColor = true;
+            this.RequestHistoryButton.Click += new System.EventHandler(this.RequestHistoryButton_Click);
+            // 
+            // HistoryFilterGroupBox
+            // 
+            this.HistoryFilterGroupBox.Controls.Add(this.HistoryLastDayGroupBox);
+            this.HistoryFilterGroupBox.Controls.Add(this.HistoryFirstDayGroupBox);
+            this.HistoryFilterGroupBox.Controls.Add(this.HistoryItemFilterGroupBox);
+            this.HistoryFilterGroupBox.Controls.Add(this.HistoryHostFilterGroupBox);
+            this.HistoryFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.HistoryFilterGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.HistoryFilterGroupBox.Name = "HistoryFilterGroupBox";
+            this.HistoryFilterGroupBox.Size = new System.Drawing.Size(763, 67);
+            this.HistoryFilterGroupBox.TabIndex = 2;
+            this.HistoryFilterGroupBox.TabStop = false;
+            this.HistoryFilterGroupBox.Text = "Фильтры списка значений ( используйте символ `%` вместо символа `*` )";
+            // 
+            // HistoryLastDayGroupBox
+            // 
+            this.HistoryLastDayGroupBox.Controls.Add(this.HistoryLastDayDateTimePicker);
+            this.HistoryLastDayGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HistoryLastDayGroupBox.Location = new System.Drawing.Point(561, 18);
+            this.HistoryLastDayGroupBox.Name = "HistoryLastDayGroupBox";
+            this.HistoryLastDayGroupBox.Size = new System.Drawing.Size(186, 46);
+            this.HistoryLastDayGroupBox.TabIndex = 3;
+            this.HistoryLastDayGroupBox.TabStop = false;
+            this.HistoryLastDayGroupBox.Text = "Последний день";
+            // 
+            // HistoryLastDayDateTimePicker
+            // 
+            this.HistoryLastDayDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryLastDayDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.HistoryLastDayDateTimePicker.Location = new System.Drawing.Point(3, 18);
+            this.HistoryLastDayDateTimePicker.MaxDate = new System.DateTime(2108, 12, 31, 0, 0, 0, 0);
+            this.HistoryLastDayDateTimePicker.MinDate = new System.DateTime(2008, 1, 1, 0, 0, 0, 0);
+            this.HistoryLastDayDateTimePicker.Name = "HistoryLastDayDateTimePicker";
+            this.HistoryLastDayDateTimePicker.Size = new System.Drawing.Size(180, 22);
+            this.HistoryLastDayDateTimePicker.TabIndex = 0;
+            this.HistoryLastDayDateTimePicker.Value = new System.DateTime(2016, 5, 5, 0, 0, 0, 0);
+            // 
+            // HistoryFirstDayGroupBox
+            // 
+            this.HistoryFirstDayGroupBox.Controls.Add(this.HistoryFirstDayDateTimePicker);
+            this.HistoryFirstDayGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HistoryFirstDayGroupBox.Location = new System.Drawing.Point(375, 18);
+            this.HistoryFirstDayGroupBox.Name = "HistoryFirstDayGroupBox";
+            this.HistoryFirstDayGroupBox.Size = new System.Drawing.Size(186, 46);
+            this.HistoryFirstDayGroupBox.TabIndex = 2;
+            this.HistoryFirstDayGroupBox.TabStop = false;
+            this.HistoryFirstDayGroupBox.Text = "Первый день";
+            // 
+            // HistoryFirstDayDateTimePicker
+            // 
+            this.HistoryFirstDayDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryFirstDayDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.HistoryFirstDayDateTimePicker.Location = new System.Drawing.Point(3, 18);
+            this.HistoryFirstDayDateTimePicker.MaxDate = new System.DateTime(2108, 12, 31, 0, 0, 0, 0);
+            this.HistoryFirstDayDateTimePicker.MinDate = new System.DateTime(2008, 1, 1, 0, 0, 0, 0);
+            this.HistoryFirstDayDateTimePicker.Name = "HistoryFirstDayDateTimePicker";
+            this.HistoryFirstDayDateTimePicker.Size = new System.Drawing.Size(180, 22);
+            this.HistoryFirstDayDateTimePicker.TabIndex = 0;
+            this.HistoryFirstDayDateTimePicker.Value = new System.DateTime(2016, 5, 5, 0, 0, 0, 0);
+            // 
+            // HistoryItemFilterGroupBox
+            // 
+            this.HistoryItemFilterGroupBox.Controls.Add(this.HistoryItemKeyFilterTextBox);
+            this.HistoryItemFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HistoryItemFilterGroupBox.Location = new System.Drawing.Point(189, 18);
+            this.HistoryItemFilterGroupBox.Name = "HistoryItemFilterGroupBox";
+            this.HistoryItemFilterGroupBox.Size = new System.Drawing.Size(186, 46);
+            this.HistoryItemFilterGroupBox.TabIndex = 0;
+            this.HistoryItemFilterGroupBox.TabStop = false;
+            this.HistoryItemFilterGroupBox.Text = "Показатель";
+            // 
+            // HistoryItemKeyFilterTextBox
+            // 
+            this.HistoryItemKeyFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryItemKeyFilterTextBox.Location = new System.Drawing.Point(3, 18);
+            this.HistoryItemKeyFilterTextBox.Name = "HistoryItemKeyFilterTextBox";
+            this.HistoryItemKeyFilterTextBox.Size = new System.Drawing.Size(180, 22);
+            this.HistoryItemKeyFilterTextBox.TabIndex = 1;
+            // 
+            // HistoryHostFilterGroupBox
+            // 
+            this.HistoryHostFilterGroupBox.Controls.Add(this.HistoryHostFilterTextBox);
+            this.HistoryHostFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.HistoryHostFilterGroupBox.Location = new System.Drawing.Point(3, 18);
+            this.HistoryHostFilterGroupBox.Name = "HistoryHostFilterGroupBox";
+            this.HistoryHostFilterGroupBox.Size = new System.Drawing.Size(186, 46);
+            this.HistoryHostFilterGroupBox.TabIndex = 1;
+            this.HistoryHostFilterGroupBox.TabStop = false;
+            this.HistoryHostFilterGroupBox.Text = "Прибор";
+            // 
+            // HistoryHostFilterTextBox
+            // 
+            this.HistoryHostFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoryHostFilterTextBox.Location = new System.Drawing.Point(3, 18);
+            this.HistoryHostFilterTextBox.Name = "HistoryHostFilterTextBox";
+            this.HistoryHostFilterTextBox.Size = new System.Drawing.Size(180, 22);
+            this.HistoryHostFilterTextBox.TabIndex = 1;
             // 
             // ReportTabPage
             // 
@@ -544,11 +739,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemsListDataGridView)).EndInit();
             this.RequestItemsGroupBox.ResumeLayout(false);
             this.ItemsListFilterGroupBox.ResumeLayout(false);
-            this.ItemNameFilterGroupBox.ResumeLayout(false);
-            this.ItemNameFilterGroupBox.PerformLayout();
+            this.ItemKeyFilterGroupBox.ResumeLayout(false);
+            this.ItemKeyFilterGroupBox.PerformLayout();
             this.HostFilterGroupBox.ResumeLayout(false);
             this.HostFilterGroupBox.PerformLayout();
             this.ChooseItemGroupBox.ResumeLayout(false);
+            this.HistoryTabPage.ResumeLayout(false);
+            this.HistoryListGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HistoryListDataGridView)).EndInit();
+            this.AttachHistoryValueGroupBox.ResumeLayout(false);
+            this.RequestHistoryGroupBox.ResumeLayout(false);
+            this.HistoryFilterGroupBox.ResumeLayout(false);
+            this.HistoryLastDayGroupBox.ResumeLayout(false);
+            this.HistoryFirstDayGroupBox.ResumeLayout(false);
+            this.HistoryItemFilterGroupBox.ResumeLayout(false);
+            this.HistoryItemFilterGroupBox.PerformLayout();
+            this.HistoryHostFilterGroupBox.ResumeLayout(false);
+            this.HistoryHostFilterGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -589,10 +796,25 @@
         private System.Windows.Forms.Button RequestItemsButton;
         private System.Windows.Forms.GroupBox ChooseItemGroupBox;
         private System.Windows.Forms.Button ChooseItemButton;
-        private System.Windows.Forms.GroupBox ItemNameFilterGroupBox;
-        private System.Windows.Forms.TextBox ItemNameFilterTextBox;
+        private System.Windows.Forms.GroupBox ItemKeyFilterGroupBox;
+        private System.Windows.Forms.TextBox ItemKeyFilterTextBox;
         private System.Windows.Forms.GroupBox HostFilterGroupBox;
         private System.Windows.Forms.TextBox HostFilterTextBox;
+        private System.Windows.Forms.GroupBox HistoryListGroupBox;
+        private System.Windows.Forms.DataGridView HistoryListDataGridView;
+        private System.Windows.Forms.GroupBox AttachHistoryValueGroupBox;
+        private System.Windows.Forms.Button AttachHistoryValueButton;
+        private System.Windows.Forms.GroupBox RequestHistoryGroupBox;
+        private System.Windows.Forms.Button RequestHistoryButton;
+        private System.Windows.Forms.GroupBox HistoryFilterGroupBox;
+        private System.Windows.Forms.GroupBox HistoryLastDayGroupBox;
+        private System.Windows.Forms.DateTimePicker HistoryLastDayDateTimePicker;
+        private System.Windows.Forms.GroupBox HistoryFirstDayGroupBox;
+        private System.Windows.Forms.DateTimePicker HistoryFirstDayDateTimePicker;
+        private System.Windows.Forms.GroupBox HistoryItemFilterGroupBox;
+        private System.Windows.Forms.TextBox HistoryItemKeyFilterTextBox;
+        private System.Windows.Forms.GroupBox HistoryHostFilterGroupBox;
+        private System.Windows.Forms.TextBox HistoryHostFilterTextBox;
     }
 }
 

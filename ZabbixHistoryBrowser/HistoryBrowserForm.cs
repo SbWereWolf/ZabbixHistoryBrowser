@@ -177,79 +177,70 @@ namespace ZabbixHistoryBrowser
                             databaseCommand.CommandTimeout = reqestTimeout;
                         }
 
-                        //                        databaseCommand.CommandText = $@"
-                        //SELECT
-                        //      ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' 
-                        //    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.Hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
-                        //FROM
-                        //        hosts_templates HP
-                        //WHERE
-                        //       EXISTS
-                        //        (
-                        //            SELECT
-                        //                NULL
-                        //            FROM
-                        //                `hosts` HOE
-                        //                JOIN items ITE
-                        //                ON ITE.Hostid = HOE.Hostid
-                        //                JOIN history HD
-                        //                ON HD.itemid = ITE.itemid
-                        //                WHERE
-                        //                    HOE.Hostid = HP.Hostid
-                        //        )
-                        //    OR EXISTS
-                        //        (
-                        //            SELECT
-                        //                NULL
-                        //            FROM
-                        //                `hosts` HOE
-                        //                JOIN items ITE
-                        //                ON ITE.Hostid = HOE.Hostid
-                        //                JOIN history_str HSE
-                        //                ON HSE.itemid = ITE.itemid
-                        //                WHERE
-                        //                    HOE.Hostid = HP.Hostid
-                        //        )
-                        //    OR EXISTS
-                        //        (
-                        //            SELECT
-                        //                NULL
-                        //            FROM
-                        //                `hosts` HOE
-                        //                JOIN items ITE
-                        //                ON ITE.Hostid = HOE.Hostid
-                        //                JOIN history_text HT
-                        //                ON HT.itemid = ITE.itemid
-                        //                WHERE
-                        //                    HOE.Hostid = HP.Hostid
-                        //        )
-                        //    OR EXISTS
-                        //        (
-                        //            SELECT
-                        //                NULL
-                        //            FROM
-                        //                `hosts` HOE
-                        //                JOIN items ITE
-                        //                ON ITE.Hostid = HOE.Hostid
-                        //                JOIN history_uint HU
-                        //                ON HU.itemid = ITE.itemid
-                        //                WHERE
-                        //                    HOE.Hostid = HP.Hostid
-                        //        )        
-                        //ORDER BY 
-                        //      HP.templateid
-                        //    , HP.Hostid
-                        //LIMIT 1
-                        //;
-                        //";
                         databaseCommand.CommandText = $@"
 SELECT
-      'Barco' AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' 
-    , 'Ekb_Salut3_32B' AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
-
-LIMIT 1
+        ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) AS '{ZabbixHistoryBrowserForm.C_TemplateColumn}' 
+    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+FROM
+        hosts_templates HP
+WHERE
+        EXISTS
+        (
+            SELECT
+                NULL
+            FROM
+                `hosts` HOE
+                JOIN items ITE
+                ON ITE.Hostid = HOE.Hostid
+                JOIN history HD
+                ON HD.itemid = ITE.itemid
+                WHERE
+                    HOE.Hostid = HP.Hostid
+        )
+    OR EXISTS
+        (
+            SELECT
+                NULL
+            FROM
+                `hosts` HOE
+                JOIN items ITE
+                ON ITE.Hostid = HOE.Hostid
+                JOIN history_str HSE
+                ON HSE.itemid = ITE.itemid
+                WHERE
+                    HOE.Hostid = HP.Hostid
+        )
+    OR EXISTS
+        (
+            SELECT
+                NULL
+            FROM
+                `hosts` HOE
+                JOIN items ITE
+                ON ITE.Hostid = HOE.Hostid
+                JOIN history_text HT
+                ON HT.itemid = ITE.itemid
+                WHERE
+                    HOE.Hostid = HP.Hostid
+        )
+    OR EXISTS
+        (
+            SELECT
+                NULL
+            FROM
+                `hosts` HOE
+                JOIN items ITE
+                ON ITE.Hostid = HOE.Hostid
+                JOIN history_uint HU
+                ON HU.itemid = ITE.itemid
+                WHERE
+                    HOE.Hostid = HP.Hostid
+        )        
+ORDER BY 
+      ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.templateid ) 
+    , ( SELECT NAME FROM `hosts` HOS WHERE HOS.Hostid = HP.hostid )
 ;
-";
+                        ";
 
                         databaseCommand.Prepare ( ) ;
                         dataSetReader = databaseCommand.ExecuteReader ( ) ;
@@ -522,75 +513,67 @@ LIMIT 1
                     const string C_HostMask = "@HostMask";
                     const string C_ItemKeyMask = "@ItemKeyMask";
 
-                    //                    databaseCommand.CommandText = $@"
-                    //SELECT
-                    //    ( SELECT host FROM `hosts` HOS WHERE HOS.hostid = IT.hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
-                    //    , IT.name AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
-                    //    , IT.key_ AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
-                    //    , IT.units AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
-                    //    , IT.description AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
-
-                    //FROM
-                    //    items IT
-                    //WHERE
-                    //        (
-                    //               {C_HostMask} IS NULL
-                    //            OR  EXISTS( SELECT NULL FROM `hosts` HOW WHERE HOW.hostid = IT.hostid AND HOW.host LIKE {C_HostMask} )
-                    //        )
-                    //    AND (
-                    //               {C_ItemKeyMask} IS NULL
-                    //            OR  IT.key_ LIKE {C_ItemKeyMask}
-                    //        )
-                    //    AND
-                    //        (
-                    //            EXISTS
-                    //            (
-                    //                SELECT
-                    //                    NULL
-                    //                FROM
-                    //                    history HDE
-                    //                WHERE
-                    //                    HDE.itemid = IT.itemid
-                    //            )
-                    //            OR EXISTS
-                    //            (
-                    //                SELECT
-                    //                    NULL
-                    //                FROM
-                    //                    history_str HSE
-                    //                WHERE
-                    //                    HSE.itemid = IT.itemid
-                    //            )
-                    //            OR EXISTS
-                    //            (
-                    //                SELECT
-                    //                    NULL
-                    //                FROM
-                    //                    history_text HTE
-                    //                WHERE
-                    //                    HTE.itemid = IT.itemid
-                    //            )
-                    //            OR EXISTS
-                    //            (
-                    //                SELECT
-                    //                    NULL
-                    //                FROM
-                    //                    history_uint HUE
-                    //                WHERE
-                    //                    HUE.itemid = IT.itemid
-                    //            )         
-                    //        )
-                    //;
-                    //";
-                    databaseCommand.CommandText = $@"
+databaseCommand.CommandText = $@"
 SELECT
-    'Ekb_Salut3_32B' AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
-    , 'BM:temperature.1' AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
-    , 'BM_temperature.1' AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
-    , ' ' AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
-    , ' ' AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
+    ( SELECT host FROM `hosts` HOS WHERE HOS.hostid = IT.hostid ) AS '{ZabbixHistoryBrowserForm.C_HostColumn}'
+    , IT.name AS '{ZabbixHistoryBrowserForm.C_NameColumn}'
+    , IT.key_ AS '{ZabbixHistoryBrowserForm.C_KeyColumn}' 
+    , IT.units AS '{ZabbixHistoryBrowserForm.C_UnitsColumn}'
+    , IT.description AS '{ZabbixHistoryBrowserForm.C_DescriptionColumn}'
+
+FROM
+    items IT
+WHERE
+        (
+                {C_HostMask} IS NULL
+            OR  EXISTS( SELECT NULL FROM `hosts` HOW WHERE HOW.hostid = IT.hostid AND HOW.host LIKE {C_HostMask} )
+        )
+    AND (
+                {C_ItemKeyMask} IS NULL
+            OR  IT.key_ LIKE {C_ItemKeyMask}
+        )
+    AND
+        (
+            EXISTS
+            (
+                SELECT
+                    NULL
+                FROM
+                    history HDE
+                WHERE
+                    HDE.itemid = IT.itemid
+            )
+            OR EXISTS
+            (
+                SELECT
+                    NULL
+                FROM
+                    history_str HSE
+                WHERE
+                    HSE.itemid = IT.itemid
+            )
+            OR EXISTS
+            (
+                SELECT
+                    NULL
+                FROM
+                    history_text HTE
+                WHERE
+                    HTE.itemid = IT.itemid
+            )
+            OR EXISTS
+            (
+                SELECT
+                    NULL
+                FROM
+                    history_uint HUE
+                WHERE
+                    HUE.itemid = IT.itemid
+            )         
+        )
 ;
 ";
+
 
                     var hostParameter = string.Empty;
                     if (
@@ -836,113 +819,178 @@ SELECT
                     const string C_HistoryFirstDay = "@HistoryFirstDay" ;
                     const string C_HistoryLastDay = "@HistoryLastDay" ;
 
-                    //                    databaseCommand.CommandText =
-                    //                        $@"
-                    //SELECT
-                    //      FROM_UNIXTIME(HD.clock) AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
-                    //    , HD.value AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
-                    //FROM
-                    //    history HD
-                    //WHERE
-                    //        EXISTS
-                    //        (
-                    //            SELECT
-                    //                NULL
-                    //            FROM
-                    //                items ITS
-                    //            WHERE
-                    //                HD.itemid = ITS.itemid
-                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
-                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-                    //        )
-                    //    AND (
-                    //            {C_HistoryFirstDay} IS NULL
-                    //            OR {C_HistoryLastDay} IS NULL
-                    //            OR HD.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-                    //        )
-                    //UNION
-                    //SELECT
-                    //      FROM_UNIXTIME(HS.clock)
-                    //    , HS.value
-                    //FROM
-                    //    history_str HS
-                    //WHERE
-                    //        EXISTS
-                    //        (
-                    //            SELECT
-                    //                NULL
-                    //            FROM
-                    //                items ITS
-                    //            WHERE
-                    //                HS.itemid = ITS.itemid
-                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
-                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-                    //        )
-                    //    AND 
-                    //        (
-                    //            {C_HistoryFirstDay} IS NULL
-                    //            OR {C_HistoryLastDay} IS NULL
-                    //            OR HS.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-                    //        )
-                    //UNION
-                    //SELECT
-                    //      FROM_UNIXTIME(HT.clock) AS DATETIME
-                    //    , HT.value
-                    //FROM
-                    //    history_text HT
-                    //WHERE
-                    //        EXISTS
-                    //        (
-                    //            SELECT
-                    //                NULL
-                    //            FROM
-                    //                items ITS
-                    //            WHERE
-                    //                HT.itemid = ITS.itemid
-                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
-                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-                    //        )
-                    //    AND 
-                    //        (
-                    //            {C_HistoryFirstDay} IS NULL
-                    //            OR {C_HistoryLastDay} IS NULL
-                    //            OR HT.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-                    //        )
-                    //UNION
-                    //SELECT
-                    //      FROM_UNIXTIME(HU.clock) AS DATETIME
-                    //    , HU.value
-                    //FROM
-                    //    history_uint HU
-                    //WHERE
-                    //        EXISTS
-                    //        (
-                    //            SELECT
-                    //                NULL
-                    //            FROM
-                    //                items ITS
-                    //            WHERE
-                    //                HU.itemid = ITS.itemid
-                    //                AND ITS.key_ LIKE {C_ItemKeyMask}
-                    //                AND EXISTS(SELECT NULL FROM `hosts` HOS WHERE ITS.hostid = HOS.hostid AND HOS.host LIKE {C_HostMask} )
-                    //        )        
-                    //    AND 
-                    //        (
-                    //            {C_HistoryFirstDay} IS NULL
-                    //            OR {C_HistoryLastDay} IS NULL
-                    //            OR HU.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
-                    //        )
-                    //LIMIT 1
-                    //;
-                    //";
-                    databaseCommand.CommandText =
-                        $@"
-SELECT
-      '2016-04-01 13:01:42' AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
-    , '32' AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
+databaseCommand.CommandText =
+    $@"
 
+SELECT
+                            FROM_UNIXTIME(HD.clock) AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
+                        , HD.value AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
+FROM
+    history HD
+WHERE
+        HD.itemid =
+        (
+            SELECT
+                ITS.itemid
+            FROM
+                items ITS
+            WHERE
+                ITS.key_ LIKE {C_ItemKeyMask}
+                AND ITS.hostid = (SELECT hostid FROM `hosts` HOS WHERE HOS.host LIKE {C_HostMask} )
+        )
+    AND 
+(
+
+                                {C_HistoryFirstDay} IS NULL AND HD.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HD.clock >= {C_HistoryFirstDay} 
+                                OR HD.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+)
+UNION
+SELECT
+                            FROM_UNIXTIME(HS.clock) 
+                        , HS.value 
+FROM
+    history_str HS
+WHERE
+    HS.itemid =
+        (
+            SELECT
+                ITS.itemid
+            FROM
+                items ITS
+            WHERE
+                ITS.key_ LIKE {C_ItemKeyMask}
+                AND ITS.hostid = (SELECT hostid FROM `hosts` HOS WHERE HOS.host LIKE {C_HostMask} )
+        )
+    AND 
+(
+                                {C_HistoryFirstDay} IS NULL AND HS.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HS.clock >= {C_HistoryFirstDay} 
+                                OR HS.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+)
+UNION
+SELECT
+    FROM_UNIXTIME(HT.clock) 
+                        , HT.value 
+FROM
+    history_text HT
+WHERE
+    HT.itemid =
+        (
+            SELECT
+                ITS.itemid
+            FROM
+                items ITS
+            WHERE
+                ITS.key_ LIKE {C_ItemKeyMask}
+                AND ITS.hostid = (SELECT hostid FROM `hosts` HOS WHERE HOS.host LIKE {C_HostMask} )
+        )
+    AND 
+(
+                                {C_HistoryFirstDay} IS NULL AND HT.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HT.clock >= {C_HistoryFirstDay} 
+                                OR HT.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+)
+UNION
+SELECT
+    FROM_UNIXTIME(HU.clock) 
+                        , HU.value 
+FROM
+    history_uint HU
+WHERE
+    HU.itemid =
+        (
+            SELECT
+                ITS.itemid
+            FROM
+                items ITS
+            WHERE
+                ITS.key_ LIKE {C_ItemKeyMask}
+                AND ITS.hostid = (SELECT hostid FROM `hosts` HOS WHERE HOS.host LIKE {C_HostMask} )
+        )        
+    AND 
+(
+                                {C_HistoryFirstDay} IS NULL AND HU.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HU.clock >= {C_HistoryFirstDay} 
+                                OR HU.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+)
 ;
-";
+
+                    /*
+                    SELECT
+                            FROM_UNIXTIME(HD.clock) AS '{ZabbixHistoryBrowserForm.C_DateColumn}'
+                        , HD.value AS '{ZabbixHistoryBrowserForm.C_ValueColumn}'
+                    FROM
+                      `hosts` HO
+                      JOIN items IT
+                      ON HO.hostid = IT.hostid 
+                      JOIN history HD
+                      ON IT.itemid = HD.itemid 
+                    WHERE
+                      HO.host LIKE {C_HostMask} 
+                      AND IT.key_ LIKE {C_ItemKeyMask}
+                      AND (
+                                {C_HistoryFirstDay} IS NULL AND HD.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HD.clock >= {C_HistoryFirstDay} 
+                                OR HD.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                            )
+                    UNION
+                    SELECT
+                            FROM_UNIXTIME(HS.clock)
+                        , HS.value
+                    FROM
+                          `hosts` HO
+                      JOIN items IT
+                      ON HO.hostid = IT.hostid
+                      JOIN history_str HS  
+                      ON IT.itemid = HS.itemid 
+                    WHERE
+                      HO.host LIKE {C_HostMask} 
+                      AND IT.key_ LIKE {C_ItemKeyMask}
+                      AND (
+                                {C_HistoryFirstDay} IS NULL AND HS.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HS.clock >= {C_HistoryFirstDay} 
+                                OR HS.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                            )
+                    UNION
+                    SELECT
+                            FROM_UNIXTIME(HT.clock) AS DATETIME
+                        , HT.value
+                    FROM
+                      `hosts` HO
+                      JOIN items IT
+                      ON HO.hostid = IT.hostid 
+                      JOIN history_text HT
+                      ON IT.itemid = HT.itemid 
+                    WHERE
+                      HO.host LIKE {C_HostMask} 
+                      AND IT.key_ LIKE {C_ItemKeyMask}
+                      AND (
+                                {C_HistoryFirstDay} IS NULL AND HT.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HT.clock >= {C_HistoryFirstDay} 
+                                OR HT.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                            )
+                    UNION
+                    SELECT
+                            FROM_UNIXTIME(HU.clock) AS DATETIME
+                        , HU.value
+                    FROM
+                      `hosts` HO
+                      JOIN items IT
+                      ON HO.hostid = IT.hostid 
+                      JOIN history_uint HU
+                      ON IT.itemid = HU.itemid 
+                    WHERE
+                      HO.host LIKE {C_HostMask} 
+                      AND IT.key_ LIKE {C_ItemKeyMask}
+                      AND (
+                                {C_HistoryFirstDay} IS NULL AND HU.clock <= {C_HistoryLastDay} 
+                                OR {C_HistoryLastDay} IS NULL AND HU.clock >= {C_HistoryFirstDay} 
+                                OR HU.clock BETWEEN UNIX_TIMESTAMP({C_HistoryFirstDay}) AND UNIX_TIMESTAMP({C_HistoryLastDay})
+                            )
+                    ;
+                    */
+                    ";
 
                     var hostParameter = string.Empty ;
                     var itemParameter = string.Empty ;
